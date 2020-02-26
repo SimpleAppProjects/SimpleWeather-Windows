@@ -48,7 +48,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OpenWeather\Weather.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OpenWeather\OpenWeatherMapProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SimpleLibrary.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utf8Json\Utf8JsonGenerated.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utf8JsonGen\Utf8JsonGenerated.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppCenterLoggingTree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ColorUtils.cs" />

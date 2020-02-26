@@ -35,7 +35,7 @@ namespace UnitTestProject
         {
             var serialStr = await JSONParser.SerializerAsync(weather);
             var deserialWeather = await JSONParser.DeserializerAsync<Weather>(serialStr);
-            var fcast = new Forecasts(weather.query, weather.forecast) { txt_forecast = weather.txt_forecast };
+            var fcast = new Forecasts(weather.query, weather.forecast, weather.txt_forecast);
             var serialFcast = await JSONParser.SerializerAsync(fcast);
             var deserialfcast = await JSONParser.DeserializerAsync<Forecasts>(serialFcast);
             bool testSuccess = Object.Equals(weather, deserialWeather) && string.Equals(fcast?.query, deserialfcast?.query) &&
@@ -51,13 +51,50 @@ namespace UnitTestProject
             return testSuccess;
         }
 
+        private const int SERIALIZER_RUNS = 5;
+
+        private void SerializerSpeedTest(Weather weather)
+        {
+            for (int i = 0; i < SERIALIZER_RUNS; i++)
+            {
+                var watch1 = System.Diagnostics.Stopwatch.StartNew();
+                string customJson = weather.ToJson();
+                watch1.Stop();
+                System.Diagnostics.Debug.WriteLine("Serialize #{2}: Weather - {0} (Custom): {1}", weather.source, watch1.Elapsed, i + 1);
+
+                watch1 = System.Diagnostics.Stopwatch.StartNew();
+                var customWeather = new Weather();
+                var customReader = new Utf8Json.JsonReader(System.Text.Encoding.UTF8.GetBytes(customJson));
+                customWeather.FromJson(ref customReader);
+                watch1.Stop();
+                System.Diagnostics.Debug.WriteLine("Deserialize #{2}: Weather - {0} (Custom): {1}", customWeather.source, watch1.Elapsed, i + 1);
+            }
+
+            System.GC.Collect();
+            Task.Delay(5000);
+
+            for (int i = 0; i < SERIALIZER_RUNS; i++)
+            {
+                var watch2 = System.Diagnostics.Stopwatch.StartNew();
+                string utf8Json = JSONParser.Serializer(weather);
+                watch2.Stop();
+                System.Diagnostics.Debug.WriteLine("Serialize #{2}: Weather - {0} (UTF8JsonGen): {1}", weather.source, watch2.Elapsed, i + 1);
+
+                watch2 = System.Diagnostics.Stopwatch.StartNew();
+                var utf8Weather = JSONParser.Deserializer<Weather>(utf8Json);
+                watch2.Stop();
+                System.Diagnostics.Debug.WriteLine("Deserialize #{2}: Weather - {0} (UTF8JsonGen): {1}", utf8Weather.source, watch2.Elapsed, i + 1);
+            }
+        }
+
         [TestMethod]
         public void GetHereWeather()
         {
             var provider = WeatherManager.GetProvider(WeatherAPI.Here);
             var weather = GetWeather(provider).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.IsTrue(weather?.IsValid() == true);
-            Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //SerializerSpeedTest(weather);
         }
 
         [TestMethod]
@@ -66,7 +103,8 @@ namespace UnitTestProject
             var provider = WeatherManager.GetProvider(WeatherAPI.Yahoo);
             var weather = GetWeather(provider).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.IsTrue(weather?.IsValid() == true);
-            Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //SerializerSpeedTest(weather);
         }
 
         [TestMethod]
@@ -75,7 +113,8 @@ namespace UnitTestProject
             var provider = WeatherManager.GetProvider(WeatherAPI.MetNo);
             var weather = GetWeather(provider).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.IsTrue(weather?.IsValid() == true);
-            Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //SerializerSpeedTest(weather);
         }
 
         [TestMethod]
@@ -84,7 +123,8 @@ namespace UnitTestProject
             var provider = WeatherManager.GetProvider(WeatherAPI.NWS);
             var weather = GetWeather(provider).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.IsTrue(weather?.IsValid() == true);
-            Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //SerializerSpeedTest(weather);
         }
 
         [TestMethod]
@@ -93,7 +133,8 @@ namespace UnitTestProject
             var provider = WeatherManager.GetProvider(WeatherAPI.OpenWeatherMap);
             var weather = GetWeather(provider).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.IsTrue(weather?.IsValid() == true);
-            Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //Assert.IsTrue(SerializerTest(weather).ConfigureAwait(false).GetAwaiter().GetResult());
+            //SerializerSpeedTest(weather);
         }
 
         [TestMethod]

@@ -126,11 +126,8 @@ namespace SimpleWeather.Utils
 
                 using (var locationDB = new LocationDBContext())
                 {
-                    var query = from loc in locationDB.Locations
-                                join favs in locationDB.Favorites
-                                on loc.query equals favs.query
-                                orderby favs.position
-                                select loc;
+                    var query = locationDB.Locations.FromSqlRaw<LocationData>(
+                        "select locations.* from locations INNER JOIN favorites on locations.query = favorites.query ORDER by favorites.position");
                     return await query.ToListAsync();
                 }
             });
@@ -315,9 +312,7 @@ namespace SimpleWeather.Utils
                         await weatherDB.SaveChangesAsync();
                     }
 
-                    if (await AsyncTask.RunAsync(weatherDB.Forecasts.GroupBy(f => f.query)
-                                                                    .Select(f => f.Key)
-                                                                    .CountAsync()) > CACHE_LIMIT / 2)
+                    if (await AsyncTask.RunAsync(weatherDB.Forecasts.CountAsync()) > CACHE_LIMIT / 2)
                     {
                         CleanupWeatherForecastData();
                     }

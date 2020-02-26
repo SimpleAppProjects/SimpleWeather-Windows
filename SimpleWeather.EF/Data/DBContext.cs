@@ -44,44 +44,44 @@ namespace SimpleWeather.Utils
             modelBuilder.Entity<Weather>()
                 .Property(w => w.location)
                 .HasConversion(
-                    value => value.ToJson(),
-                    value => JSONParser.CustomDeserializer<WeatherData.Location>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<WeatherData.Location>(value));
 
             modelBuilder.Entity<Weather>()
                 .Property(w => w.condition)
                 .HasConversion(
-                    value => value.ToJson(),
-                    value => JSONParser.CustomDeserializer<Condition>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<Condition>(value));
 
             modelBuilder.Entity<Weather>()
                 .Property(w => w.atmosphere)
                 .HasConversion(
-                    value => value.ToJson(),
-                    value => JSONParser.CustomDeserializer<Atmosphere>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<Atmosphere>(value));
 
             modelBuilder.Entity<Weather>()
                 .Property(w => w.astronomy)
                 .HasConversion(
-                    value => value.ToJson(),
-                    value => JSONParser.CustomDeserializer<Astronomy>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<Astronomy>(value));
 
             modelBuilder.Entity<Weather>()
                 .Property(w => w.precipitation)
                 .HasConversion(
-                    value => value.ToJson(),
-                    value => JSONParser.CustomDeserializer<Precipitation>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<Precipitation>(value));
 
             modelBuilder.Entity<Forecasts>()
                 .Property(f => f.forecast)
                 .HasConversion(
-                    value => JSONParser.CustomEnumerableSerializer(value),
-                    value => JSONParser.CustomEnumerableDeserializer<Forecast>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<IList<Forecast>>(value));
 
             modelBuilder.Entity<Forecasts>()
                 .Property(f => f.txt_forecast)
                 .HasConversion(
-                    value => JSONParser.CustomEnumerableSerializer(value),
-                    value => JSONParser.CustomEnumerableDeserializer<TextForecast>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<IList<TextForecast>>(value));
 
             modelBuilder.Entity<HourlyForecasts>()
                 .HasKey(f => new { f.query, f.dateblob });
@@ -89,14 +89,41 @@ namespace SimpleWeather.Utils
             modelBuilder.Entity<HourlyForecasts>()
                 .Property(f => f.hr_forecast)
                 .HasConversion(
-                    value => value.ToJson(),
-                    value => JSONParser.CustomDeserializer<HourlyForecast>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<HourlyForecast>(value));
 
             modelBuilder.Entity<WeatherAlerts>()
                 .Property(a => a.alerts)
                 .HasConversion(
-                    value => JSONParser.CustomEnumerableSerializer(value),
-                    value => JSONParser.CustomEnumerableDeserializer<WeatherAlert>(value));
+                    value => JSONParser.Serializer(value),
+                    value => DBDeserializer<ICollection<WeatherAlert>>(value));
+        }
+
+        private T DBDeserializer<T>(string value)
+        {
+            bool useAttrResolver;
+            string str;
+
+            // Use our own resolver (custom deserializer) if json string is escaped
+            // since the Utf8Json deserializer is alot more strict
+            if (value.Contains("\"{\\\""))
+            {
+                str = value;
+                useAttrResolver = true;
+            }
+            else
+            {
+                var unescape = new StringBuilder(System.Text.RegularExpressions.Regex.Unescape(value));
+                if (unescape.Length > 1 && unescape[0] == '"' && unescape[unescape.Length - 1] == '"')
+                {
+                    unescape.Remove(0, 1);
+                    unescape.Remove(unescape.Length - 1, 1);
+                }
+                str = unescape.ToString();
+                useAttrResolver = str.Contains("\\") || str.Contains("[\"{\"") || str.Contains("\"{\"");
+            }
+
+            return Utf8Json.JsonSerializer.Deserialize<T>(str, useAttrResolver ? EF.Utf8JsonGen.AttrFirstUtf8JsonResolver.Instance : JSONParser.Resolver);
         }
     }
 

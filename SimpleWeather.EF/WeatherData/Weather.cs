@@ -123,7 +123,8 @@ namespace SimpleWeather.WeatherData
                         // Most provider forecasts are <= 10
                         var forecasts = new List<Forecast>(10);
                         count = 0;
-                        while (reader.ReadIsInArray(ref count))
+                        reader.ReadIsBeginArrayWithVerify();
+                        while (!reader.ReadIsEndArrayWithSkipValueSeparator(ref count))
                         {
                             if (reader.GetCurrentJsonToken() == JsonToken.String)
                             {
@@ -132,6 +133,7 @@ namespace SimpleWeather.WeatherData
                                 forecasts.Add(forecast);
                             }
                         }
+                        if (count == 0) reader.ReadIsValueSeparator();
                         this.forecast = forecasts;
                         break;
 
@@ -141,7 +143,8 @@ namespace SimpleWeather.WeatherData
                         // If 90+ is needed, let the List impl allocate more
                         var hr_forecasts = new List<HourlyForecast>(90);
                         count = 0;
-                        while (reader.ReadIsInArray(ref count))
+                        reader.ReadIsBeginArrayWithVerify();
+                        while (!reader.ReadIsEndArrayWithSkipValueSeparator(ref count))
                         {
                             if (reader.GetCurrentJsonToken() == JsonToken.String)
                             {
@@ -150,6 +153,7 @@ namespace SimpleWeather.WeatherData
                                 hr_forecasts.Add(hrf);
                             }
                         }
+                        if (count == 0) reader.ReadIsValueSeparator();
                         this.hr_forecast = hr_forecasts;
                         break;
 
@@ -158,7 +162,8 @@ namespace SimpleWeather.WeatherData
                         // Most provider forecasts are <= 10 (x2 for day & nt)
                         var txt_forecasts = new List<TextForecast>(20);
                         count = 0;
-                        while (reader.ReadIsInArray(ref count))
+                        reader.ReadIsBeginArrayWithVerify();
+                        while (!reader.ReadIsEndArrayWithSkipValueSeparator(ref count))
                         {
                             if (reader.GetCurrentJsonToken() == JsonToken.String)
                             {
@@ -167,6 +172,7 @@ namespace SimpleWeather.WeatherData
                                 txt_forecasts.Add(txtf);
                             }
                         }
+                        if (count == 0) reader.ReadIsValueSeparator();
                         this.txt_forecast = txt_forecasts;
                         break;
 
@@ -194,7 +200,8 @@ namespace SimpleWeather.WeatherData
                         // Set initial cap to 5
                         var alerts = new List<WeatherAlert>(5);
                         count = 0;
-                        while (reader.ReadIsInArray(ref count))
+                        reader.ReadIsBeginArrayWithVerify();
+                        while (!reader.ReadIsEndArrayWithSkipValueSeparator(ref count))
                         {
                             if (reader.GetCurrentJsonToken() == JsonToken.String)
                             {
@@ -203,6 +210,7 @@ namespace SimpleWeather.WeatherData
                                 alerts.Add(alert);
                             }
                         }
+                        if (count == 0) reader.ReadIsValueSeparator();
                         this.weather_alerts = alerts;
                         break;
 
@@ -2308,10 +2316,11 @@ namespace SimpleWeather.WeatherData
         {
         }
 
-        public Forecasts(string query, IList<Forecast> forecast)
+        public Forecasts(string query, IList<Forecast> forecast, IList<TextForecast> txt_forecast)
         {
             this.query = query;
             this.forecast = forecast;
+            this.txt_forecast = txt_forecast;
         }
     }
 

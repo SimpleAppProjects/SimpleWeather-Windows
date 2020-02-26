@@ -10,24 +10,16 @@ using Windows.Storage;
 
 namespace SimpleWeather.Utils
 {
-    public static class JSONParser
+    public static partial class JSONParser
     {
+        // CompositeResolver is singleton helper for use custom resolver.
+        // Ofcourse you can also make custom resolver.
+        internal static IJsonFormatterResolver Resolver =
+            SimpleWeather.EF.Utf8JsonGen.Utf8JsonResolver.Instance;
+
         static JSONParser()
         {
-            // CompositeResolver is singleton helper for use custom resolver.
-            // Ofcourse you can also make custom resolver.
-            Utf8Json.Resolvers.CompositeResolver.RegisterAndSetAsDefault(
-                // use generated resolver first, and combine many other generated/custom resolvers
-                SimpleWeather.EF.Utf8JsonGen.Resolvers.GeneratedResolver.Instance,
-#if !EF_PROJECT
-                SimpleWeather.Utf8JsonGen.Resolvers.GeneratedResolver.Instance,
-#endif
-
-                // set StandardResolver or your use resolver chain
-                Utf8Json.Resolvers.AttributeFormatterResolver.Instance,
-                Utf8Json.Resolvers.BuiltinResolver.Instance,
-                Utf8Json.Resolvers.EnumResolver.Default
-            );
+            JsonSerializer.SetDefaultResolver(Resolver);
         }
 
         public static T Deserializer<T>(String response)
@@ -123,100 +115,5 @@ namespace SimpleWeather.Utils
         {
             return Task.Run(() => Serializer(obj));
         }
-
-        public static string CustomSerializer<T>(T obj) where T : CustomJsonObject
-        {
-            var writer = new JsonWriter();
-            CustomSerializer(ref writer, obj);
-            var str = writer.ToString();
-            return str;
-        }
-
-        public static T CustomDeserializer<T>(string json) where T : CustomJsonObject
-        {
-            var reader = new JsonReader(Encoding.UTF8.GetBytes(json));
-            return CustomDeserializer<T>(ref reader);
-        }
-
-        public static string CustomEnumerableSerializer<T>(System.Collections.Generic.IEnumerable<T> obj) where T : CustomJsonObject
-        {
-            var writer = new JsonWriter();
-            writer.WriteBeginArray();
-            var itemCount = 0;
-            foreach (var item in obj)
-            {
-                if (itemCount > 0)
-                    writer.WriteValueSeparator();
-                CustomSerializer(ref writer, item);
-                itemCount++;
-            }
-            writer.WriteEndArray();
-            var str = writer.ToString();
-            return str;
-        }
-
-        public static System.Collections.Generic.List<T> CustomEnumerableDeserializer<T>(string json) where T : CustomJsonObject
-        {
-            var list = new System.Collections.Generic.List<T>();
-            var reader = new JsonReader(Encoding.UTF8.GetBytes(json));
-            var count = 0; // managing array-count state in outer(this is count, not index(index is always count - 1)
-            while ((reader.ReadIsInArray(ref count)))
-            {
-                if (reader.GetCurrentJsonToken() == JsonToken.String)
-                    list.Add(CustomDeserializer<T>(ref reader));
-            }
-            return list;
-        }
-
-        internal static bool CanCustomConvert(Type objectType)
-        {
-            return objectType.BaseType == typeof(CustomJsonObject);
-        }
-
-        internal static T CustomDeserializer<T>(ref JsonReader reader) where T : CustomJsonObject
-        {
-            T obj = null;
-            try
-            {
-                obj = Activator.CreateInstance(typeof(T), true) as T;
-                obj.FromJson(ref reader);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLine(LoggerLevel.Error, ex, "SimpleWeather: CustomJsonConverter: error invoking FromJson method");
-            }
-
-            return obj;
-        }
-
-        internal static void CustomSerializer<T>(ref JsonWriter writer, T value) where T : CustomJsonObject
-        {
-            writer.WriteString(value.ToJson());
-        }
-    }
-
-    public class CustomJsonConverter<T> : IJsonFormatter<T> where T : CustomJsonObject
-    {
-        public T Deserialize(ref JsonReader reader, IJsonFormatterResolver formatterResolver)
-        {
-            return JSONParser.CustomDeserializer<T>(ref reader);
-        }
-
-        public void Serialize(ref JsonWriter writer, T value, IJsonFormatterResolver formatterResolver)
-        {
-            JSONParser.CustomSerializer(ref writer, value);
-        }
-    }
-
-    public abstract class CustomJsonObject
-    {
-        public abstract String ToJson();
-
-        /// <summary>
-        /// FromJson
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <exception cref="JsonException"></exception>
-        public abstract void FromJson(ref JsonReader reader);
     }
 }

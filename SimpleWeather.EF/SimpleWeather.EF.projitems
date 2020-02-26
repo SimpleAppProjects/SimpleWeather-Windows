@@ -26,7 +26,10 @@
       <DependentUpon>20200213091139_EFInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Data\Migrations\WeatherDB\WeatherDBContextModelSnapshot.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utf8Json\Utf8JsonGenerated.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utf8JsonGen\CustomJsonObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utf8JsonGen\EnumerableFormatter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utf8JsonGen\Utf8JsonGenerated.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utf8JsonGen\Utf8JsonResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DateTimeUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FileLoggingTree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JSONParser.cs" />

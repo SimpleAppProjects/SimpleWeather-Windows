@@ -361,10 +361,7 @@ namespace SimpleWeather.UWP.Main
             if (wm.SupportsAlerts && weather.weather_alerts != null)
                 await Settings.SaveWeatherAlerts(location, weather.weather_alerts);
             await Settings.SaveWeatherData(weather);
-            await Settings.SaveWeatherForecasts(new Forecasts(weather.query, weather.forecast)
-            {
-                txt_forecast = weather.txt_forecast
-            });
+            await Settings.SaveWeatherForecasts(new Forecasts(weather.query, weather.forecast, weather.txt_forecast));
             await Settings.SaveWeatherForecasts(location, weather.hr_forecast == null ? null :
                 weather.hr_forecast.Select(f => new HourlyForecasts(weather.query, f)));
 

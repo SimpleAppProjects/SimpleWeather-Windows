@@ -177,7 +177,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.Location
             writer.WriteRaw(this.____stringByteKeys[4]);
             writer.WriteString(value.tz_long);
             writer.WriteRaw(this.____stringByteKeys[5]);
-            formatterResolver.GetFormatterWithVerify<global::SimpleWeather.Location.LocationType>().Serialize(ref writer, value.locationType, formatterResolver);
+            writer.WriteInt32((int)value.locationType);
             writer.WriteRaw(this.____stringByteKeys[6]);
             writer.WriteString(value.weatherSource);
             writer.WriteRaw(this.____stringByteKeys[7]);
@@ -246,7 +246,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.Location
                         __tz_long__b__ = true;
                         break;
                     case 5:
-                        __locationType__ = formatterResolver.GetFormatterWithVerify<global::SimpleWeather.Location.LocationType>().Deserialize(ref reader, formatterResolver);
+                        __locationType__ = (global::SimpleWeather.Location.LocationType)reader.ReadInt32();
                         __locationType__b__ = true;
                         break;
                     case 6:
@@ -450,7 +450,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __name__ = default(string);
             var __name__b__ = false;
@@ -508,17 +508,17 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.Location();
-            if(__name__b__) ____result.name = __name__;
-            if(__latitude__b__) ____result.latitude = __latitude__;
-            if(__longitude__b__) ____result.longitude = __longitude__;
-            if(__tz_offset__b__) ____result.tz_offset = __tz_offset__;
-            if(__tz_short__b__) ____result.tz_short = __tz_short__;
-            if(__tz_long__b__) ____result.tz_long = __tz_long__;
+            if (__name__b__) ____result.name = __name__;
+            if (__latitude__b__) ____result.latitude = __latitude__;
+            if (__longitude__b__) ____result.longitude = __longitude__;
+            if (__tz_offset__b__) ____result.tz_offset = __tz_offset__;
+            if (__tz_short__b__) ____result.tz_short = __tz_short__;
+            if (__tz_long__b__) ____result.tz_long = __tz_long__;
 
             return ____result;
         }
@@ -633,7 +633,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __feelslike_f__ = default(float);
             var __feelslike_f__b__ = false;
@@ -763,29 +763,29 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.ForecastExtras();
-            if(__feelslike_f__b__) ____result.feelslike_f = __feelslike_f__;
-            if(__feelslike_c__b__) ____result.feelslike_c = __feelslike_c__;
-            if(__humidity__b__) ____result.humidity = __humidity__;
-            if(__dewpoint_f__b__) ____result.dewpoint_f = __dewpoint_f__;
-            if(__dewpoint_c__b__) ____result.dewpoint_c = __dewpoint_c__;
-            if(__uv_index__b__) ____result.uv_index = __uv_index__;
-            if(__pop__b__) ____result.pop = __pop__;
-            if(__qpf_rain_in__b__) ____result.qpf_rain_in = __qpf_rain_in__;
-            if(__qpf_rain_mm__b__) ____result.qpf_rain_mm = __qpf_rain_mm__;
-            if(__qpf_snow_in__b__) ____result.qpf_snow_in = __qpf_snow_in__;
-            if(__qpf_snow_cm__b__) ____result.qpf_snow_cm = __qpf_snow_cm__;
-            if(__pressure_mb__b__) ____result.pressure_mb = __pressure_mb__;
-            if(__pressure_in__b__) ____result.pressure_in = __pressure_in__;
-            if(__wind_degrees__b__) ____result.wind_degrees = __wind_degrees__;
-            if(__wind_mph__b__) ____result.wind_mph = __wind_mph__;
-            if(__wind_kph__b__) ____result.wind_kph = __wind_kph__;
-            if(__visibility_mi__b__) ____result.visibility_mi = __visibility_mi__;
-            if(__visibility_km__b__) ____result.visibility_km = __visibility_km__;
+            if (__feelslike_f__b__) ____result.feelslike_f = __feelslike_f__;
+            if (__feelslike_c__b__) ____result.feelslike_c = __feelslike_c__;
+            if (__humidity__b__) ____result.humidity = __humidity__;
+            if (__dewpoint_f__b__) ____result.dewpoint_f = __dewpoint_f__;
+            if (__dewpoint_c__b__) ____result.dewpoint_c = __dewpoint_c__;
+            if (__uv_index__b__) ____result.uv_index = __uv_index__;
+            if (__pop__b__) ____result.pop = __pop__;
+            if (__qpf_rain_in__b__) ____result.qpf_rain_in = __qpf_rain_in__;
+            if (__qpf_rain_mm__b__) ____result.qpf_rain_mm = __qpf_rain_mm__;
+            if (__qpf_snow_in__b__) ____result.qpf_snow_in = __qpf_snow_in__;
+            if (__qpf_snow_cm__b__) ____result.qpf_snow_cm = __qpf_snow_cm__;
+            if (__pressure_mb__b__) ____result.pressure_mb = __pressure_mb__;
+            if (__pressure_in__b__) ____result.pressure_in = __pressure_in__;
+            if (__wind_degrees__b__) ____result.wind_degrees = __wind_degrees__;
+            if (__wind_mph__b__) ____result.wind_mph = __wind_mph__;
+            if (__wind_kph__b__) ____result.wind_kph = __wind_kph__;
+            if (__visibility_mi__b__) ____result.visibility_mi = __visibility_mi__;
+            if (__visibility_km__b__) ____result.visibility_km = __visibility_km__;
 
             return ____result;
         }
@@ -860,7 +860,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __date__ = default(global::System.DateTime);
             var __date__b__ = false;
@@ -930,19 +930,19 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.Forecast();
-            if(__date__b__) ____result.date = __date__;
-            if(__high_f__b__) ____result.high_f = __high_f__;
-            if(__high_c__b__) ____result.high_c = __high_c__;
-            if(__low_f__b__) ____result.low_f = __low_f__;
-            if(__low_c__b__) ____result.low_c = __low_c__;
-            if(__condition__b__) ____result.condition = __condition__;
-            if(__icon__b__) ____result.icon = __icon__;
-            if(__extras__b__) ____result.extras = __extras__;
+            if (__date__b__) ____result.date = __date__;
+            if (__high_f__b__) ____result.high_f = __high_f__;
+            if (__high_c__b__) ____result.high_c = __high_c__;
+            if (__low_f__b__) ____result.low_f = __low_f__;
+            if (__low_c__b__) ____result.low_c = __low_c__;
+            if (__condition__b__) ____result.condition = __condition__;
+            if (__icon__b__) ____result.icon = __icon__;
+            if (__extras__b__) ____result.extras = __extras__;
 
             return ____result;
         }
@@ -1025,7 +1025,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __date__ = default(global::System.DateTimeOffset);
             var __date__b__ = false;
@@ -1107,21 +1107,21 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.HourlyForecast();
-            if(__date__b__) ____result.date = __date__;
-            if(__high_f__b__) ____result.high_f = __high_f__;
-            if(__high_c__b__) ____result.high_c = __high_c__;
-            if(__condition__b__) ____result.condition = __condition__;
-            if(__icon__b__) ____result.icon = __icon__;
-            if(__pop__b__) ____result.pop = __pop__;
-            if(__wind_degrees__b__) ____result.wind_degrees = __wind_degrees__;
-            if(__wind_mph__b__) ____result.wind_mph = __wind_mph__;
-            if(__wind_kph__b__) ____result.wind_kph = __wind_kph__;
-            if(__extras__b__) ____result.extras = __extras__;
+            if (__date__b__) ____result.date = __date__;
+            if (__high_f__b__) ____result.high_f = __high_f__;
+            if (__high_c__b__) ____result.high_c = __high_c__;
+            if (__condition__b__) ____result.condition = __condition__;
+            if (__icon__b__) ____result.icon = __icon__;
+            if (__pop__b__) ____result.pop = __pop__;
+            if (__wind_degrees__b__) ____result.wind_degrees = __wind_degrees__;
+            if (__wind_mph__b__) ____result.wind_mph = __wind_mph__;
+            if (__wind_kph__b__) ____result.wind_kph = __wind_kph__;
+            if (__extras__b__) ____result.extras = __extras__;
 
             return ____result;
         }
@@ -1184,7 +1184,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __title__ = default(string);
             var __title__b__ = false;
@@ -1236,16 +1236,16 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.TextForecast();
-            if(__title__b__) ____result.title = __title__;
-            if(__fcttext__b__) ____result.fcttext = __fcttext__;
-            if(__fcttext_metric__b__) ____result.fcttext_metric = __fcttext_metric__;
-            if(__icon__b__) ____result.icon = __icon__;
-            if(__pop__b__) ____result.pop = __pop__;
+            if (__title__b__) ____result.title = __title__;
+            if (__fcttext__b__) ____result.fcttext = __fcttext__;
+            if (__fcttext_metric__b__) ____result.fcttext_metric = __fcttext_metric__;
+            if (__icon__b__) ____result.icon = __icon__;
+            if (__pop__b__) ____result.pop = __pop__;
 
             return ____result;
         }
@@ -1283,7 +1283,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             
 
             writer.WriteRaw(this.____stringByteKeys[0]);
-            formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.Beaufort.BeaufortScale>().Serialize(ref writer, value.scale, formatterResolver);
+            writer.WriteInt32((int)value.scale);
             writer.WriteRaw(this.____stringByteKeys[1]);
             writer.WriteString(value.desc);
             
@@ -1296,7 +1296,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __scale__ = default(global::SimpleWeather.WeatherData.Beaufort.BeaufortScale);
             var __scale__b__ = false;
@@ -1318,7 +1318,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                 switch (key)
                 {
                     case 0:
-                        __scale__ = formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.Beaufort.BeaufortScale>().Deserialize(ref reader, formatterResolver);
+                        __scale__ = (global::SimpleWeather.WeatherData.Beaufort.BeaufortScale)reader.ReadInt32();
                         __scale__b__ = true;
                         break;
                     case 1:
@@ -1330,13 +1330,13 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.Beaufort();
-            if(__scale__b__) ____result.scale = __scale__;
-            if(__desc__b__) ____result.desc = __desc__;
+            if (__scale__b__) ____result.scale = __scale__;
+            if (__desc__b__) ____result.desc = __desc__;
 
             return ____result;
         }
@@ -1387,7 +1387,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __index__ = default(float);
             var __index__b__ = false;
@@ -1421,13 +1421,13 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.UV();
-            if(__index__b__) ____result.index = __index__;
-            if(__desc__b__) ____result.desc = __desc__;
+            if (__index__b__) ____result.index = __index__;
+            if (__desc__b__) ____result.desc = __desc__;
 
             return ____result;
         }
@@ -1514,7 +1514,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __weather__ = default(string);
             var __weather__b__ = false;
@@ -1602,22 +1602,22 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.Condition();
-            if(__weather__b__) ____result.weather = __weather__;
-            if(__temp_f__b__) ____result.temp_f = __temp_f__;
-            if(__temp_c__b__) ____result.temp_c = __temp_c__;
-            if(__wind_degrees__b__) ____result.wind_degrees = __wind_degrees__;
-            if(__wind_mph__b__) ____result.wind_mph = __wind_mph__;
-            if(__wind_kph__b__) ____result.wind_kph = __wind_kph__;
-            if(__feelslike_f__b__) ____result.feelslike_f = __feelslike_f__;
-            if(__feelslike_c__b__) ____result.feelslike_c = __feelslike_c__;
-            if(__icon__b__) ____result.icon = __icon__;
-            if(__beaufort__b__) ____result.beaufort = __beaufort__;
-            if(__uv__b__) ____result.uv = __uv__;
+            if (__weather__b__) ____result.weather = __weather__;
+            if (__temp_f__b__) ____result.temp_f = __temp_f__;
+            if (__temp_c__b__) ____result.temp_c = __temp_c__;
+            if (__wind_degrees__b__) ____result.wind_degrees = __wind_degrees__;
+            if (__wind_mph__b__) ____result.wind_mph = __wind_mph__;
+            if (__wind_kph__b__) ____result.wind_kph = __wind_kph__;
+            if (__feelslike_f__b__) ____result.feelslike_f = __feelslike_f__;
+            if (__feelslike_c__b__) ____result.feelslike_c = __feelslike_c__;
+            if (__icon__b__) ____result.icon = __icon__;
+            if (__beaufort__b__) ____result.beaufort = __beaufort__;
+            if (__uv__b__) ____result.uv = __uv__;
 
             return ____result;
         }
@@ -1692,7 +1692,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __humidity__ = default(string);
             var __humidity__b__ = false;
@@ -1762,19 +1762,19 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.Atmosphere();
-            if(__humidity__b__) ____result.humidity = __humidity__;
-            if(__pressure_mb__b__) ____result.pressure_mb = __pressure_mb__;
-            if(__pressure_in__b__) ____result.pressure_in = __pressure_in__;
-            if(__pressure_trend__b__) ____result.pressure_trend = __pressure_trend__;
-            if(__visibility_mi__b__) ____result.visibility_mi = __visibility_mi__;
-            if(__visibility_km__b__) ____result.visibility_km = __visibility_km__;
-            if(__dewpoint_f__b__) ____result.dewpoint_f = __dewpoint_f__;
-            if(__dewpoint_c__b__) ____result.dewpoint_c = __dewpoint_c__;
+            if (__humidity__b__) ____result.humidity = __humidity__;
+            if (__pressure_mb__b__) ____result.pressure_mb = __pressure_mb__;
+            if (__pressure_in__b__) ____result.pressure_in = __pressure_in__;
+            if (__pressure_trend__b__) ____result.pressure_trend = __pressure_trend__;
+            if (__visibility_mi__b__) ____result.visibility_mi = __visibility_mi__;
+            if (__visibility_km__b__) ____result.visibility_km = __visibility_km__;
+            if (__dewpoint_f__b__) ____result.dewpoint_f = __dewpoint_f__;
+            if (__dewpoint_c__b__) ____result.dewpoint_c = __dewpoint_c__;
 
             return ____result;
         }
@@ -1812,7 +1812,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             
 
             writer.WriteRaw(this.____stringByteKeys[0]);
-            formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.MoonPhase.MoonPhaseType>().Serialize(ref writer, value.phase, formatterResolver);
+            writer.WriteInt32((int)value.phase);
             writer.WriteRaw(this.____stringByteKeys[1]);
             writer.WriteString(value.desc);
             
@@ -1825,7 +1825,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __phase__ = default(global::SimpleWeather.WeatherData.MoonPhase.MoonPhaseType);
             var __phase__b__ = false;
@@ -1847,7 +1847,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                 switch (key)
                 {
                     case 0:
-                        __phase__ = formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.MoonPhase.MoonPhaseType>().Deserialize(ref reader, formatterResolver);
+                        __phase__ = (global::SimpleWeather.WeatherData.MoonPhase.MoonPhaseType)reader.ReadInt32();
                         __phase__b__ = true;
                         break;
                     case 1:
@@ -1859,13 +1859,13 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.MoonPhase();
-            if(__phase__b__) ____result.phase = __phase__;
-            if(__desc__b__) ____result.desc = __desc__;
+            if (__phase__b__) ____result.phase = __phase__;
+            if (__desc__b__) ____result.desc = __desc__;
 
             return ____result;
         }
@@ -1928,7 +1928,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __sunrise__ = default(global::System.DateTime);
             var __sunrise__b__ = false;
@@ -1980,16 +1980,16 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.Astronomy();
-            if(__sunrise__b__) ____result.sunrise = __sunrise__;
-            if(__sunset__b__) ____result.sunset = __sunset__;
-            if(__moonrise__b__) ____result.moonrise = __moonrise__;
-            if(__moonset__b__) ____result.moonset = __moonset__;
-            if(__moonphase__b__) ____result.moonphase = __moonphase__;
+            if (__sunrise__b__) ____result.sunrise = __sunrise__;
+            if (__sunset__b__) ____result.sunset = __sunset__;
+            if (__moonrise__b__) ____result.moonrise = __moonrise__;
+            if (__moonset__b__) ____result.moonset = __moonset__;
+            if (__moonphase__b__) ____result.moonphase = __moonphase__;
 
             return ____result;
         }
@@ -2052,7 +2052,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __pop__ = default(string);
             var __pop__b__ = false;
@@ -2104,16 +2104,16 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.Precipitation();
-            if(__pop__b__) ____result.pop = __pop__;
-            if(__qpf_rain_in__b__) ____result.qpf_rain_in = __qpf_rain_in__;
-            if(__qpf_rain_mm__b__) ____result.qpf_rain_mm = __qpf_rain_mm__;
-            if(__qpf_snow_in__b__) ____result.qpf_snow_in = __qpf_snow_in__;
-            if(__qpf_snow_cm__b__) ____result.qpf_snow_cm = __qpf_snow_cm__;
+            if (__pop__b__) ____result.pop = __pop__;
+            if (__qpf_rain_in__b__) ____result.qpf_rain_in = __qpf_rain_in__;
+            if (__qpf_rain_mm__b__) ____result.qpf_rain_mm = __qpf_rain_mm__;
+            if (__qpf_snow_in__b__) ____result.qpf_snow_in = __qpf_snow_in__;
+            if (__qpf_snow_cm__b__) ____result.qpf_snow_cm = __qpf_snow_cm__;
 
             return ____result;
         }
@@ -2163,9 +2163,9 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             
 
             writer.WriteRaw(this.____stringByteKeys[0]);
-            formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.WeatherAlertType>().Serialize(ref writer, value.Type, formatterResolver);
+            writer.WriteInt32((int)value.Type);
             writer.WriteRaw(this.____stringByteKeys[1]);
-            formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.WeatherAlertSeverity>().Serialize(ref writer, value.Severity, formatterResolver);
+            writer.WriteInt32((int)value.Severity);
             writer.WriteRaw(this.____stringByteKeys[2]);
             writer.WriteString(value.Title);
             writer.WriteRaw(this.____stringByteKeys[3]);
@@ -2188,7 +2188,7 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
             {
                 return null;
             }
-            
+
 
             var __Type__ = default(global::SimpleWeather.WeatherData.WeatherAlertType);
             var __Type__b__ = false;
@@ -2222,11 +2222,11 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                 switch (key)
                 {
                     case 0:
-                        __Type__ = formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.WeatherAlertType>().Deserialize(ref reader, formatterResolver);
+                        __Type__ = (global::SimpleWeather.WeatherData.WeatherAlertType)reader.ReadInt32();
                         __Type__b__ = true;
                         break;
                     case 1:
-                        __Severity__ = formatterResolver.GetFormatterWithVerify<global::SimpleWeather.WeatherData.WeatherAlertSeverity>().Deserialize(ref reader, formatterResolver);
+                        __Severity__ = (global::SimpleWeather.WeatherData.WeatherAlertSeverity)reader.ReadInt32();
                         __Severity__b__ = true;
                         break;
                     case 2:
@@ -2258,19 +2258,19 @@ namespace SimpleWeather.EF.Utf8JsonGen.Formatters.SimpleWeather.WeatherData
                         break;
                 }
 
-                NEXT_LOOP:
+            NEXT_LOOP:
                 continue;
             }
 
             var ____result = new global::SimpleWeather.WeatherData.WeatherAlert();
-            if(__Type__b__) ____result.Type = __Type__;
-            if(__Severity__b__) ____result.Severity = __Severity__;
-            if(__Title__b__) ____result.Title = __Title__;
-            if(__Message__b__) ____result.Message = __Message__;
-            if(__Attribution__b__) ____result.Attribution = __Attribution__;
-            if(__Date__b__) ____result.Date = __Date__;
-            if(__ExpiresDate__b__) ____result.ExpiresDate = __ExpiresDate__;
-            if(__Notified__b__) ____result.Notified = __Notified__;
+            if (__Type__b__) ____result.Type = __Type__;
+            if (__Severity__b__) ____result.Severity = __Severity__;
+            if (__Title__b__) ____result.Title = __Title__;
+            if (__Message__b__) ____result.Message = __Message__;
+            if (__Attribution__b__) ____result.Attribution = __Attribution__;
+            if (__Date__b__) ____result.Date = __Date__;
+            if (__ExpiresDate__b__) ____result.ExpiresDate = __ExpiresDate__;
+            if (__Notified__b__) ____result.Notified = __Notified__;
 
             return ____result;
         }
